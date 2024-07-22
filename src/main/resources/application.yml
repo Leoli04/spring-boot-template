@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: springBootTemplate
+  profiles:
+    active: ${profile:dev}
+
+server:
+  port: ${server_port:8080}
+
+logging:
+  config: classpath:logback/logback_${profile:dev}.xml
+
+
+
+
+
+
+
+
+
+
+
+
+

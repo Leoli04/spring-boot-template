@@ -2,7 +2,7 @@
 
 ## 简介
 提供一个spring boot 模板工程，方便快速开发。里面包含项目搭建常用的基础组件， 如：mybatis-plus、redis、mongodb、mysql、swagger、日志等。
-基于spring boot 3.3.2版本搭建。
+基于spring boot 3.3.2,jdk 17搭建。
 
 ## 参考资料
 

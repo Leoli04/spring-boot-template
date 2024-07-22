@@ -1,0 +1,8 @@
+
+
+logging:
+  level:
+    root: info
+    com.semiyo.ic: debug
+    org.mybatis: debug
+

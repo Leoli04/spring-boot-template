@@ -1,0 +1,8 @@
+
+
+logging:
+  level:
+    root: info
+    com.leoli04.springboottemplate: debug
+    org.mybatis: debug
+
