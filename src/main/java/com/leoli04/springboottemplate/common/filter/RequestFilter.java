@@ -49,6 +49,7 @@ public class RequestFilter implements Filter {
         logger.info("RequestFilter====>userIp:{},UserId:{},Url:{},Token:{},Device-Id:{},phoneTimeZone:{}",
                 IpUtil.getIpAddress(httpServletRequest), AuthUtil.currentUserId(), url, AuthUtil.accessToken(),
                 AuthUtil.deviceId(), AuthUtil.phoneTimeZone());
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
