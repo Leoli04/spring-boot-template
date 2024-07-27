@@ -32,6 +32,7 @@ import java.util.Set;
 
 /**
  * @Description: swagger配置
+ * 参考：https://github.com/springfox/springfox-demos
  * @Author: LeoLi04
  * @CreateDate: 2024/7/27 16:39
  * @Version: 1.0
