@@ -1,4 +1,51 @@
-
+spring:
+  datasource:
+    # 指定数据源类型为Druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 数据库驱动类名
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接URL
+    url: jdbc:mysql://localhost:3306/demo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: demo
+    # 初始化连接池大小
+    initialSize: 5
+    # 最小空闲连接数
+    minIdle: 5
+    # 最大活跃连接数
+    maxActive: 20
+    # 获取连接最大等待时间（毫秒）
+    maxWait: 10000
+    # 间隔多久进行一次检测，检测需要关闭的空闲连接（毫秒）
+    timeBetweenEvictionRunsMillis: 60000
+    # 连接在池中保持空闲而不被逐出的最小时间（毫秒）
+    minEvictableIdleTimeMillis: 300000
+    # 用来检测从连接池取出的连接，在空闲时是否保持有效
+    validationQuery: SELECT 1 FROM DUAL
+    # 建议配置为true，不影响性能，并且保证安全性
+    testWhileIdle: true
+    # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+    testOnBorrow: false
+    # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+    testOnReturn: false
+    # 是否缓存preparedStatement，即PSCache。PSCache对支持游标的数据库性能提升巨大，如oracle
+    poolPreparedStatements: true
+    # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置扩展插件，常用的插件有：监控统计用的filter:stat，日志用的filter:log4j，防御SQL注入的filter:wall
+    filters: stat,wall,log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  data:
+    #  查看RedisProperties 属性
+    redis:
+      clientType: lettuce
+      host: localhost
+      port: 6379
+      password: 123456
+      database: 0
 
 logging:
   level:
