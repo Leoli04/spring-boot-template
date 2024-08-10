@@ -57,7 +57,7 @@ logging:
 zoho:
   crm:
     clientId: 1000.2JZUI6ELIB86G51EWNUK6YNFD1VG6M
-    clientSecret: 016dc18aaa722ca27840cc953c9df6ba183e456c99
+    clientSecret: xx
     grantToken: 1000.a477e1860ddc97b86d374551ef92cb25.8a1603d7af57c7daa5bf28f245a21b7d
     #日志路径
     logPath: zoho_crm/java_sdk_log_sandbox.log
@@ -65,4 +65,10 @@ zoho:
     filePath: zoho_crm/java_sdk_token_sandbox.txt
     resourcePath: zoho_crm/
     env: SANDBOX
+
+express:
+  baiyun:
+    host: https://test-adapter-api.by56.com/router/api
+    key: FD981D0B-BC8B-4A55-ABD0-C571B51B4990
+    secret: 028D0512-E130-4EB3-8583-BE7F53FF7085
 

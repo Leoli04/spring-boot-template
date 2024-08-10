@@ -2,6 +2,7 @@ package com.leoli04.springboottemplate.repository.client;
 
 import com.alibaba.fastjson2.JSON;
 import com.leoli04.springboottemplate.common.config.property.By56Property;
+import com.leoli04.springboottemplate.common.util.OkHttpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -63,7 +64,11 @@ public class By56Client {
         params.put("sign",signStr);
         //请求接口
         log.info("运费参数：params={}", JSON.toJSONString(params));
-        String result = OkHttpUtil.post(by56Property.getHost(),params);
+        String result = OkHttpUtils.builder()
+                .url(by56Property.getHost())
+                .addParams(params)
+                .post(Boolean.TRUE)
+                .sync();
         log.info("运费结果：result={}",JSON.toJSONString(result));
         Map<String, Object> resultMap = JSON.parseObject(result, Map.class);
         return resultMap;

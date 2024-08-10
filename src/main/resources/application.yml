@@ -24,6 +24,15 @@ swagger:
   application-description: springBootTemplate swagger API
   try-host: http://localhost:${server.port}
 
+tencent:
+  api:
+    appId: xx
+    secretId: xx
+    secretKey: xx
+    bucketName: xx
+    region: xx
+    icDomain: domain
+
 
 
 

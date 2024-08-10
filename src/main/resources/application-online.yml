@@ -53,13 +53,19 @@ logging:
 
 zoho:
   crm:
-    clientId: 1000.2JZUI6ELIB86G51EWNUK6YNFD1VG6M
-    clientSecret: 016dc18aaa722ca27840cc953c9df6ba183e456c99
+    clientId: xx
+    clientSecret: xx
     grantToken:
     #日志路径
     logPath: zoho_crm/java_sdk_log_sandbox.log
     #文件存储路径
     filePath: zoho_crm/java_sdk_token_sandbox.txt
     resourcePath: zoho_crm/
-    env: SANDBOX
+    env: PRODUCTION
+
+express:
+  baiyun:
+    host: https://unapi.by56.com/router/api
+    key: xx
+    secret: xx
 

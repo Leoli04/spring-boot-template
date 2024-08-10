@@ -115,6 +115,14 @@ public class OkHttpUtils {
         return this;
     }
 
+    public OkHttpUtils addParams(Map<String,String> params) {
+        if (paramMap == null) {
+            paramMap = new LinkedHashMap<>(16);
+        }
+        paramMap.putAll(params);
+        return this;
+    }
+
     /**
      * 添加请求头
      *
