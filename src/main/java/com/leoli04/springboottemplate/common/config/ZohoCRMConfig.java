@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author pengtao.zhang
+ * @author LeoLi04
  * @create 2024-06-06 23:48
  * @desc zoho crm配置类
  **/
