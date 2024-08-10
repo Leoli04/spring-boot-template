@@ -237,6 +237,12 @@
         </dependency>
 
         <!--   第三方系统对接     -->
+        <!--cos sdk-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.6.219.1</version>
+        </dependency>
         <!--zoho crm-->
         <dependency>
             <groupId>com.zoho.crm</groupId>
