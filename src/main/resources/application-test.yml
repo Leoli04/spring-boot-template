@@ -53,3 +53,15 @@ logging:
     com.semiyo.ic: debug
     org.mybatis: debug
 
+zoho:
+  crm:
+    clientId: 1000.2JZUI6ELIB86G51EWNUK6YNFD1VG6M
+    clientSecret: 016dc18aaa722ca27840cc953c9df6ba183e456c99
+    grantToken: 1000.a477e1860ddc97b86d374551ef92cb25.8a1603d7af57c7daa5bf28f245a21b7d
+    #日志路径
+    logPath: zoho_crm/java_sdk_log_sandbox.log
+    #文件存储路径
+    filePath: zoho_crm/java_sdk_token_sandbox.txt
+    resourcePath: zoho_crm/
+    env: SANDBOX
+

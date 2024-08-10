@@ -31,6 +31,13 @@
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <swagger.version>3.0.0</swagger.version>
     </properties>
+    <!--zoho crm-->
+    <repositories>
+        <repository>
+            <id>zohocrm-java-sdk-6-0</id>
+            <url>https://maven.zohodl.com</url>
+        </repository>
+    </repositories>
     <dependencies>
         <!--spring依赖-->
         <dependency>
@@ -229,6 +236,14 @@
             <artifactId>assertj-core</artifactId>
         </dependency>
 
+        <!--   第三方系统对接     -->
+        <!--zoho crm-->
+        <dependency>
+            <groupId>com.zoho.crm</groupId>
+            <artifactId>zohocrm-java-sdk-6-0</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -244,6 +259,14 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
         </plugins>
