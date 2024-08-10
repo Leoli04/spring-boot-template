@@ -56,9 +56,9 @@ logging:
 
 zoho:
   crm:
-    clientId: 1000.2JZUI6ELIB86G51EWNUK6YNFD1VG6M
+    clientId: xx
     clientSecret: xx
-    grantToken: 1000.a477e1860ddc97b86d374551ef92cb25.8a1603d7af57c7daa5bf28f245a21b7d
+    grantToken: xx
     #日志路径
     logPath: zoho_crm/java_sdk_log_sandbox.log
     #文件存储路径

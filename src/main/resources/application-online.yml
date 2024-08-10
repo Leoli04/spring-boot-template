@@ -55,7 +55,7 @@ zoho:
   crm:
     clientId: xx
     clientSecret: xx
-    grantToken:
+    grantToken: xx
     #日志路径
     logPath: zoho_crm/java_sdk_log_sandbox.log
     #文件存储路径
