@@ -58,6 +58,8 @@ public class OkHttpUtils {
                             .hostnameVerifier((hostName, session) -> true)
                             .retryOnConnectionFailure(true)
                             .build();
+                    addHeader("User-Agent", "xx");
+
                 }
             }
         }
