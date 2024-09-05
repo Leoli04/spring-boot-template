@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
@@ -33,6 +35,7 @@ public class TencentCosClient {
 
     private static final String IMAGE_PATH = "image/";
     private static final String AFFIX_PATH = "affix/";
+    private static final String EXCEL_PATH = "excel/";
 
 
 
@@ -101,6 +104,19 @@ public class TencentCosClient {
             log.error("处理图片失败 url={}",url,e);
         }
         return null;
+    }
+
+    public String uploadExcel(Workbook workbook, String fileName) throws Exception{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        workbook.write(baos);
+        InputStream inputStream = new ByteArrayInputStream(baos.toByteArray());
+
+        String bucketName = tencentCosConfig.getBucketName();
+        String key = EXCEL_PATH + fileName;
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, inputStream, null);
+        PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+        log.info("uploadExcel:" + putObjectResult.getRequestId());
+        return key;
     }
 
 }
