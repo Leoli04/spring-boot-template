@@ -168,6 +168,12 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.27</version>
         </dependency>
+        <!--EasyPoi 处理excel导入导出-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
+            <version>4.5.0</version>
+        </dependency>
         <!--  日志      -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
