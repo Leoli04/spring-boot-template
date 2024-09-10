@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.leoli04.springboottemplate.bean.PageResult;
 import com.leoli04.springboottemplate.bean.dto.PageSearchDto;
+import com.leoli04.springboottemplate.common.aop.DynamicTable;
 import com.leoli04.springboottemplate.repository.dao.DemoDao;
 import com.leoli04.springboottemplate.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class DemoServiceImpl implements DemoService {
     private DemoDao demoDao;
 
     @Override
+    @DynamicTable(tableName = "demo",separateKey = "#dto.xx")
     public PageResult pageSearch(PageSearchDto dto) {
         Page page = new Page(dto.getPageIndex(),dto.getPageSize());
         page.addOrder(dto.getIsAsc() ? OrderItem.asc(dto.getOrderBy()) : OrderItem.desc(dto.getOrderBy()));
