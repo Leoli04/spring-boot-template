@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leoli04.springboottemplate.repository.dao.TaskDao">
+
+    <resultMap id="resultMap" type="com.leoli04.springboottemplate.repository.dao.entity.Task">
+        <result property="id" column="id"/>
+
+        <result property="taskType" column="task_type"/>
+        <result property="taskStatus" column="task_status"/>
+        <result property="completedTime" column="completed_time"/>
+
+        <result property="deleted" column="deleted"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="getLastTaskStatusByType" resultMap="resultMap">
+        SELECT t1.*
+        FROM ic_task t1
+        JOIN (
+            SELECT id,task_type, MAX(create_time) AS max_create_time
+            FROM ic_task
+            WHERE task_type IN
+            <foreach item="type" index="index" collection="taskTypeList" open="(" separator="," close=")">
+                #{type}
+            </foreach>
+            GROUP BY task_type
+        ) t2 ON t1.task_type=t2.task_type and t1.create_time = t2.max_create_time
+    </select>
+
+</mapper>
+
