@@ -2,6 +2,7 @@ package com.leoli04.springboottemplate.common.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -14,12 +15,12 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,13 +31,14 @@ import java.util.concurrent.TimeUnit;
  */
 @EnableCaching
 @Configuration
+@Slf4j
 public class CacheManagerConfiguration {
 
     /**
      * 创建基于Caffeine的Cache Manager,本地缓存
      * 使用 @Cacheable 注解的时候默认使用的这个缓存
      */
-    @Bean
+    @Bean(name = "caffeineCacheManager")
     @Primary
     public CacheManager caffeineCacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
@@ -48,6 +50,9 @@ public class CacheManagerConfiguration {
                                 .recordStats()
                                 .expireAfterWrite(c.getTtl(), TimeUnit.SECONDS)
                                 .maximumSize(c.getMaxSize())
+                                .softValues()
+                                .removalListener((key, value, cause) ->
+                                        log.debug("缓存 {} 被移除，原因: {}", key, cause))
                                 .build()))
         );
         cacheManager.setCaches(caches);
@@ -63,25 +68,26 @@ public class CacheManagerConfiguration {
      * @return
      */
     @Bean(name = "redisCacheManager")
-    public CacheManager redisCacheManager(@Value("${spring.application.name}") String applicationName,RedisConnectionFactory factory) {
-        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(factory);
-
-        RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+    public CacheManager redisCacheManager(@Value("${spring.application.name}") String applicationName,
+                                          RedisConnectionFactory factory) {
+        // 默认配置
+        RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .prefixCacheNameWith(applicationName)
-                .entryTtl(Duration.ofSeconds(3600));
+                .prefixCacheNameWith(applicationName + ":")
+                .entryTtl(Duration.ofSeconds(CacheNames.DEFAULT_TTL))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
-        Map<String, RedisCacheConfiguration> cacheMap = new LinkedHashMap<>(CacheNames.values().length);
-        for (CacheNames c : CacheNames.values()) {
-            if (c.getTtl() > 0) {
-                cacheMap.put(c.name(), defaultCacheConfig.entryTtl(Duration.ofSeconds(c.getTtl())));
-            } else {
-                cacheMap.put(c.name(), defaultCacheConfig);
-            }
+        // 为每个 CacheNames 配置独立 TTL
+        Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
+        for (CacheNames cn : CacheNames.values()) {
+            cacheConfigs.put(cn.name(), defaultConfig.entryTtl(Duration.ofSeconds(cn.getTtl())));
         }
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter, defaultCacheConfig, cacheMap);
-        redisCacheManager.setTransactionAware(true);
-        redisCacheManager.initializeCaches();
-        return redisCacheManager;
+
+        return RedisCacheManager.builder(factory)
+                .cacheDefaults(defaultConfig)
+                .withInitialCacheConfigurations(cacheConfigs)
+                .transactionAware()
+                .build();
     }
 }

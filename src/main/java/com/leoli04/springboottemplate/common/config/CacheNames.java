@@ -17,7 +17,7 @@ public enum CacheNames {
     ;
 
     private static final int DEFAULT_MAXSIZE = 1000;
-    private static final int DEFAULT_TTL = 3600;
+    public static final int DEFAULT_TTL = 3600;
     CacheNames() {
     }
 
